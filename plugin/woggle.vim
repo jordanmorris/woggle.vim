@@ -23,13 +23,13 @@ autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTree
 map <C-n>n :NERDTreeToggle<CR>
 map <C-n>1 :NERDTreeFromBookmark Club3<CR>
 
-let originalHorizontalWindowNumber = -1
-let originalVerticalWindowNumber = -1
-let extremeLeft = -1
-let extremeUpper = -1
-let middlish = 0
-let extremeRight = 1
-let extremeLower = 1
+let s:originalHorizontalWindowNumber = -1
+let s:originalVerticalWindowNumber = -1
+let s:extremeLeft = -1
+let s:extremeUpper = -1
+let s:middlish = 0
+let s:extremeRight = 1
+let s:extremeLower = 1
 
 function GetHorizontalWindowPos()
     let startWindowNumber = winnr()
@@ -37,15 +37,15 @@ function GetHorizontalWindowPos()
 	let isExtremeLeft = winnr() == startWindowNumber
 	:exe startWindowNumber . "wincmd w"
 	if isExtremeLeft
-		return g:extremeLeft
+		return s:extremeLeft
 	endif
     execute "normal! \<C-w>l"
 	let isExtremeRight = winnr() == startWindowNumber
 	:exe startWindowNumber . "wincmd w"
 	if isExtremeRight
-		return g:extremeRight
+		return s:extremeRight
 	endif
-	return g:middlish
+	return s:middlish
 endfunction
 
 function GetVerticalWindowPos()
@@ -54,15 +54,15 @@ function GetVerticalWindowPos()
 	let isExtremeUpper = winnr() == startWindowNumber
 	:exe startWindowNumber . "wincmd w"
 	if isExtremeUpper
-		return g:extremeUpper
+		return s:extremeUpper
 	endif
     execute "normal! \<C-w>j"
 	let isExtremeLower = winnr() == startWindowNumber
 	:exe startWindowNumber . "wincmd w"
 	if isExtremeLower
-		return g:extremeLower
+		return s:extremeLower
 	endif
-	return g:middlish
+	return s:middlish
 endfunction
 
 function IsFullHeightWindow(windowNumber)
@@ -91,47 +91,47 @@ endfunction
 
 function ToggleWindowHorizontally()
     let horizontalWindowPos = GetHorizontalWindowPos()
-	if horizontalWindowPos == g:middlish | return | endif
+	if horizontalWindowPos == s:middlish | return | endif
 	let startWindowNumber = winnr()
-	if g:originalHorizontalWindowNumber != -1 && IsFullHeightWindow(startWindowNumber)
-		:exe g:originalHorizontalWindowNumber . "wincmd w"
+	if s:originalHorizontalWindowNumber != -1 && IsFullHeightWindow(startWindowNumber)
+		:exe s:originalHorizontalWindowNumber . "wincmd w"
 		if winnr() != startWindowNumber
-			let g:originalHorizontalWindowNumber = startWindowNumber
+			let s:originalHorizontalWindowNumber = startWindowNumber
 			return
 		endif
 	endif
-	if horizontalWindowPos == g:extremeLeft
+	if horizontalWindowPos == s:extremeLeft
 		execute "normal! \<C-w>l"
 	else
 		execute "normal! \<C-w>h"
 	endif
 	if winnr() != startWindowNumber
-		let g:originalHorizontalWindowNumber = startWindowNumber
+		let s:originalHorizontalWindowNumber = startWindowNumber
 	else
-		let g:originalHorizontalWindowNumber = -1
+		let s:originalHorizontalWindowNumber = -1
 	endif
 endfunction
 
 function ToggleWindowVertically()
     let verticalWindowPos = GetVerticalWindowPos()
-	if verticalWindowPos == g:middlish | return | endif
+	if verticalWindowPos == s:middlish | return | endif
 	let startWindowNumber = winnr()
-	if g:originalVerticalWindowNumber != -1 && IsFullWidthWindow(startWindowNumber)
-		:exe g:originalVerticalWindowNumber . "wincmd w"
+	if s:originalVerticalWindowNumber != -1 && IsFullWidthWindow(startWindowNumber)
+		:exe s:originalVerticalWindowNumber . "wincmd w"
 		if winnr() != startWindowNumber
-			let g:originalVerticalWindowNumber = startWindowNumber
+			let s:originalVerticalWindowNumber = startWindowNumber
 			return
 		endif
 	endif
-	if verticalWindowPos == g:extremeUpper
+	if verticalWindowPos == s:extremeUpper
 		execute "normal! \<C-w>j"
 	else
 		execute "normal! \<C-w>k"
 	endif
 	if winnr() != startWindowNumber
-		let g:originalVerticalWindowNumber = startWindowNumber
+		let s:originalVerticalWindowNumber = startWindowNumber
 	else
-		let g:originalVerticalWindowNumber = -1
+		let s:originalVerticalWindowNumber = -1
 	endif
 endfunction
 
