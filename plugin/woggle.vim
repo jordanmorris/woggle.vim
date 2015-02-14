@@ -1,27 +1,5 @@
-set nocompatible
-vnoremap <C-C> "+y
-execute pathogen#infect()
-execute pathogen#helptags()
-set clipboard=unnamed
-set nobackup
-colorscheme darkblue
-set wrap
-set linebreak
-set nolist
-set wrapmargin=0
-set shiftwidth=4
-set tabstop=4
-set expandtab
-set nu
-
-map <A-p> :CtrlPBuffer<CR>
-
-"NERDTree stuff BEGIN
-"How can I close vim if the only window left open is a NERDTree?
-autocmd bufenter * if (winnr("$") == 1 && exists("b:NERDTreeType") && b:NERDTreeType == "primary") | q | endif
-"
-map <C-n>n :NERDTreeToggle<CR>
-map <C-n>1 :NERDTreeFromBookmark Club3<CR>
+noremap <silent> <tab> :call WoggleHorizontally()<CR>
+noremap <silent> <space> :call WoggleVertically()<CR>
 
 let s:originalHorizontalWindowNumber = -1
 let s:originalVerticalWindowNumber = -1
@@ -31,7 +9,7 @@ let s:middlish = 0
 let s:extremeRight = 1
 let s:extremeLower = 1
 
-function GetHorizontalWindowPos()
+function s:GetHorizontalWindowPos()
     let startWindowNumber = winnr()
     execute "normal! \<C-w>h"
 	let isExtremeLeft = winnr() == startWindowNumber
@@ -48,7 +26,7 @@ function GetHorizontalWindowPos()
 	return s:middlish
 endfunction
 
-function GetVerticalWindowPos()
+function s:GetVerticalWindowPos()
     let startWindowNumber = winnr()
     execute "normal! \<C-w>k"
 	let isExtremeUpper = winnr() == startWindowNumber
@@ -65,7 +43,7 @@ function GetVerticalWindowPos()
 	return s:middlish
 endfunction
 
-function IsFullHeightWindow(windowNumber)
+function s:IsFullHeightWindow(windowNumber)
     let startWindowNumber = winnr()
 	:exe a:windowNumber . "wincmd w"
     execute "normal! \<C-w>k"
@@ -77,7 +55,7 @@ function IsFullHeightWindow(windowNumber)
 	return isExtremeUpper && isExtremeBottom
 endfunction
 
-function IsFullWidthWindow(windowNumber)
+function s:IsFullWidthWindow(windowNumber)
     let startWindowNumber = winnr()
 	:exe a:windowNumber . "wincmd w"
     execute "normal! \<C-w>h"
@@ -89,11 +67,11 @@ function IsFullWidthWindow(windowNumber)
 	return isExtremeLeft && isExtremeRight
 endfunction
 
-function ToggleWindowHorizontally()
-    let horizontalWindowPos = GetHorizontalWindowPos()
+function WoggleHorizontally()
+    let horizontalWindowPos = s:GetHorizontalWindowPos()
 	if horizontalWindowPos == s:middlish | return | endif
 	let startWindowNumber = winnr()
-	if s:originalHorizontalWindowNumber != -1 && IsFullHeightWindow(startWindowNumber)
+	if s:originalHorizontalWindowNumber != -1 && s:IsFullHeightWindow(startWindowNumber)
 		:exe s:originalHorizontalWindowNumber . "wincmd w"
 		if winnr() != startWindowNumber
 			let s:originalHorizontalWindowNumber = startWindowNumber
@@ -112,11 +90,11 @@ function ToggleWindowHorizontally()
 	endif
 endfunction
 
-function ToggleWindowVertically()
-    let verticalWindowPos = GetVerticalWindowPos()
+function WoggleVertically()
+    let verticalWindowPos = s:GetVerticalWindowPos()
 	if verticalWindowPos == s:middlish | return | endif
 	let startWindowNumber = winnr()
-	if s:originalVerticalWindowNumber != -1 && IsFullWidthWindow(startWindowNumber)
+	if s:originalVerticalWindowNumber != -1 && s:IsFullWidthWindow(startWindowNumber)
 		:exe s:originalVerticalWindowNumber . "wincmd w"
 		if winnr() != startWindowNumber
 			let s:originalVerticalWindowNumber = startWindowNumber
@@ -134,8 +112,3 @@ function ToggleWindowVertically()
 		let s:originalVerticalWindowNumber = -1
 	endif
 endfunction
-
-noremap <tab> :call ToggleWindowHorizontally()<CR>
-noremap <space> :call ToggleWindowVertically()<CR>
-
-"NERDTree stuff END
