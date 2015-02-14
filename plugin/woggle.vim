@@ -1,5 +1,16 @@
+"Enables intuitive navigation between windows in vim.
+"Note that this script assumes the CTRL+[hjkl] shortcuts have their default
+"actions
+
+"Map the Tab and Space keys to the window toggle commands
 noremap <silent> <tab> :call WoggleHorizontally()<CR>
 noremap <silent> <space> :call WoggleVertically()<CR>
+
+"Map the arrow keys to the corresponding window move commands
+noremap <up> <C-w>k
+noremap <down> <C-w>j
+noremap <left> <C-w>h
+noremap <right> <C-w>l
 
 let s:originalHorizontalWindowNumber = -1
 let s:originalVerticalWindowNumber = -1
