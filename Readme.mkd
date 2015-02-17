@@ -1,0 +1,9 @@
+Simple and intuitive window navigation for VIM.
+
+## Cursor Navigtion
+
+Use tab or spacebar to toggle the cursor horizontally or vertically.
+
+![Diagram show Horizontal and Vertical cursor toggling]()
+
+
