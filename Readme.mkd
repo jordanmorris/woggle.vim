@@ -1,9 +1,0 @@
-Simple and intuitive window navigation for VIM.
-
-## Cursor Navigation
-
-Use tab or spacebar to toggle the cursor horizontally or vertically:
-
-![Diagram show Horizontal and Vertical cursor toggling]()
-
-Woggle.vim will remember your cursor position if you only have three windows:
