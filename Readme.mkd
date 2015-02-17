@@ -8,4 +8,12 @@ Use tab or spacebar to toggle the cursor horizontally or vertically:
 
 Woggle.vim will remember your cursor position if you only have three windows:
 
-![Diagram showing cursor toggling with window memory](https://jordanmorris.github.io/woggle.vim/CursorSplitThreeWays.png)
+![Diagram showing cursor toggling with window memory](https://jordanmorris.github.io/woggle.vim/SplitOnRightOnly.png)
+
+Woggle.vim currenly only supports 2 horizontal and/or 2 vertical splits, so windows which are not on the edge are a deadzone with respect to the tab/space shortcut keys.
+
+![Diagram showing tab and space keys doing nothing in a middle window](https://jordanmorris.github.io/woggle.vim/CursorSplitThreeWays.png)
+
+However, in this (or any) situation, you can use the arrow keys to navigate any which way:
+
+![Diagram showing arrow keys navigating between windows](https://jordanmorris.github.io/woggle.vim/ArrowKeys.png)
